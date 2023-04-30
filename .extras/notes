@@ -1,0 +1,6 @@
+Interface uses:
+    - Get original board
+    - Get opponent move
+    - Display if necessary
+
+Future:
