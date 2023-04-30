@@ -1,10 +1,14 @@
-# CONSTANTS
+# VARIABLES
 # # # # # # # # # # 
 BOARD_COLUMNS = 7
 BOARD_ROWS = 6
 
 # connect numbers will start at 1 (for a single space)
 WIN_CONNECT_NUM = 4
+
+# Do status prints?
+DO_STATUS_PRINTS = False
+
 
 # PLACEHOLDERS
 # # # # # # # # # # # # # 

@@ -3,6 +3,8 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Predictive function
 from .predictive.none import predictBoardValue
+# Value Selection function
+from .value_selection.decay import selectTopMoveValue
 
 from constants import *
 from board import Board
@@ -10,8 +12,7 @@ from board import Board
 # Statistics
 stat_cycles = 0
 
-def selectBoardValue(moveValues, player):
-    return max(moveValues) if player == PLAYER_MAX else min(moveValues)
+
 
 # MINIMAX FUNCTION (recursive)
 # DESCRIPTION: Gets the gamestate of the board inputted
@@ -47,9 +48,9 @@ def getBoardValue(board, depth=1):
         nb.makeMove(moveXY, nb.getTurn())
 
         # Do statistical prints
-        if stat_cycles % 100 == 0:
-            print(".", end="")
-        # displayBoard(nb, end="")
+        if DO_STATUS_PRINTS:
+            if stat_cycles % 100 == 0:
+                print(".", end="")
 
         # If the depth isn't at 0:
         #   Run this function again on the new board with +1 depth
@@ -60,5 +61,5 @@ def getBoardValue(board, depth=1):
             # Do predictive algorithm (none)
             moveValues.append(predictBoardValue(nb))
     
-    return selectBoardValue(moveValues, player)
+    return selectTopMoveValue(moveValues, player)
 

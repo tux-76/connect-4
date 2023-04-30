@@ -44,7 +44,8 @@ def getBestMove(board, depth=1):
         nb.makeMove(moveXY, nb.getTurn())
         # Get the value of that board
         moveValues.append(getBoardValue(nb, depth=depth+1))
-        print("Move Choice:", moveValues[-1])
+        if DO_STATUS_PRINTS:
+            print("Move Choice:", moveValues[-1])
 
     # if player == PLAYER_MAX:
     #     return moves[moveValues.index(max(moveValues))]
@@ -79,13 +80,13 @@ board = Board(interface.getBoard())
 while not board.isTerminal():
     # Player
     print()
-    interface.displayBoard(board)
     interface.updatePlayerMove(board)
     if board.isTerminal():
         break
 
+    # AI
     aiMove = getBestMove(board, depth=MAX_SEARCH_DEPTH*-1)
-    print("Move selected:", aiMove[0]+1)
+    print("AI move selected:", aiMove[0]+1)
     board.makeMove(aiMove, board.getTurn())
 
 interface.endGame(board, board.getTerminalGameState())

@@ -19,31 +19,38 @@ class Interface():
         return matrix
     
     def updatePlayerMove(self, board):
+        # Show the board to the player
+        self.displayBoard(board)
+
         success = False
         while not success:
-            # Get user move
-            move = input("Make move by column number:")
-            if move.isnumeric():
-                move = int(move) - 1
-                success = True
-            elif move == "":
-                print("Exiting user move function")
-                return 0
-            else:
-                print("Please try again...")
-                success = False
-                
-
-        # Get valid moves
-        validMoves = board.getMoves()
-        # Loop through the valid moves to see if one matches our input
-        for validMoveXY in validMoves:
-            x, y = validMoveXY
-            # If the x of this move fits our inputted column
-            if x == move:
-                board.makeMove(validMoveXY, board.getTurn())
-                break
-        return 0
+            # Get valid input
+            validInput = False
+            while not validInput:
+                # Get user move
+                move = input("Make move by column number:")
+                if move.isnumeric():
+                    move = int(move) - 1
+                    validInput = True
+                elif move == "":
+                    print("! No user input given !")
+                    return 0
+                else:
+                    print("Please try again...")
+            # Get valid moves
+            validMoves = board.getMoves()
+            # Loop through the valid moves to see if one matches our input
+            for validMoveXY in validMoves:
+                x, y = validMoveXY
+                # If the x of this move fits our inputted column
+                if x == move:
+                    board.makeMove(validMoveXY, board.getTurn())
+                    success = True
+                    break
+            if success == False:
+                print("That move can not be played...")
+        
+            
 
 
     
