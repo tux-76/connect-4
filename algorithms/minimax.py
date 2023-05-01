@@ -45,7 +45,7 @@ def getBoardValue(board, depth=1):
     for moveXY in moves:
         # Create a new board and make that move in it
         nb = board.clone()
-        nb.makeMove(moveXY, nb.getTurn())
+        nb.move(moveXY, nb.getTurn())
 
         # Do statistical prints
         if DO_STATUS_PRINTS:

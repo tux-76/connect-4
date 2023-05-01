@@ -102,6 +102,6 @@ class Board:
         return moves
     
     # Make Move => Void: Makes the move
-    def makeMove(self, xy, spaceType):
+    def move(self, xy, spaceType):
         x, y = xy
         self.matrix[x][y] = spaceType
