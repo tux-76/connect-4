@@ -13,7 +13,7 @@ from interface.terminal import Interface
 # Main Algorithm
 from algorithms.minimax import getBoardValue
 # Move selection
-from algorithms.move_selection.random import selectMove
+from algorithms.move_selection.self_sabotage import selectMove
 
 # Necessary imports
 from constants import *

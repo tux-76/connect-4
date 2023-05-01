@@ -4,7 +4,7 @@
 # Predictive function
 from .predictive.none import predictBoardValue
 # Value Selection function
-from .value_selection.decay import selectTopMoveValue
+from .value_assignment.decay import assignTotalValue
 
 from constants import *
 from board import Board
@@ -66,5 +66,5 @@ def getBoardValue(board, depth=1):
                 # Do predictive algorithm (none)
                 moveValues.append(predictBoardValue(nb))
     
-    return selectTopMoveValue(moveValues, player)
+    return assignTotalValue(moveValues, player)
 
