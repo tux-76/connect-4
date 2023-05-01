@@ -12,8 +12,6 @@
 from interface.terminal import Interface
 # Main Algorithm
 from algorithms.minimax import getBoardValue
-# Predictive Algorithm
-from algorithms.predictive.random_value import predictBoardValue
 # Move selection
 from algorithms.move_selection.random import selectMove
 
@@ -35,7 +33,7 @@ MAX_SEARCH_DEPTH = 4
 # INIT
 interface = Interface()
 board = Board(interface.getBoard())
-ai = AI(interface, getBoardValue, predictBoardValue, selectMove, positiveSeachDepth=MAX_SEARCH_DEPTH)
+ai = AI(interface, getBoardValue, selectMove, positiveSeachDepth=MAX_SEARCH_DEPTH)
 
 
 # TRAP PRESET (yellow play 2)

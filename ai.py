@@ -1,9 +1,8 @@
 from constants import *
 
 class AI:
-    def __init__(self, interface, mainAlgorithm, predictiveFunction, moveSelectionFunction, positiveSeachDepth=4):
+    def __init__(self, interface, mainAlgorithm, moveSelectionFunction, positiveSeachDepth=4):
         self.main = mainAlgorithm
-        self.predictive = predictiveFunction
         self.selectMove = moveSelectionFunction
         # It's weird, but minimax will add to the running depth until it reaches 0, so thats why negative
         self.searchDepth = positiveSeachDepth*-1

@@ -57,9 +57,14 @@ def getBoardValue(board, depth=1):
         if depth != 0:
             # Run minimax function
             moveValues.append(getBoardValue(nb, depth=depth+1))
-        else:
-            # Do predictive algorithm (none)
-            moveValues.append(predictBoardValue(nb))
+        else: # We cannot go further because of depth limitations
+            # Get the state of the game
+            terminalGameState = board.getTerminalGameState()
+            if terminalGameState != None:
+                moreValues.append(terminalGameState)
+            else:
+                # Do predictive algorithm (none)
+                moveValues.append(predictBoardValue(nb))
     
     return selectTopMoveValue(moveValues, player)
 
