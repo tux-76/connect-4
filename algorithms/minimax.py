@@ -1,8 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # MINIMAX algorithm
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Predictive function
-from .predictive.none import predictBoardValue
 # Value Selection function
 from .value_assignment.decay import assignTotalValue
 
@@ -14,57 +12,64 @@ stat_cycles = 0
 
 
 
-# MINIMAX FUNCTION (recursive)
+# MINIMAX CLASS (recursive)
 # DESCRIPTION: Gets the gamestate of the board inputted
 # GAMESTATE: A number from -1 to 1 representing the outcome of the board if both players play optimaly
 # SPECIAL ARGS:
 # - depth: if is a natural number, simply keeps track of the current depth
 #     - MAX DEPTH: to set max depth, set depth to the negative of the max depth,
 #         once max depth is reached will call prediction function
-def getBoardValue(board, depth=1):
-    # Update statistics
-    global stat_cycles
-    stat_cycles = stat_cycles + 1
+class minimax():
+    def __init__(self, predictiveFunction, valueAssignmentFunction, depth):
+        self.predictBoardValue = predictiveFunction
+        self.assignTotalValue = valueAssignmentFunction
+        self.depth = depth
 
-    # Set necessary varaibles
-    # Set player and move choosing function
-    player = board.getTurn()
+    # MAIN FUNCTION
+    def getBoardValue(self, board, depth=4):
+        # Update statistics
+        global stat_cycles
+        stat_cycles = stat_cycles + 1
 
-    # Check if the board is at a terminal status (game over)
-    # Get the state
-    state = board.getTerminalGameState()
-    # If game over
-    if state != None:
-        return state
+        # Set necessary varaibles
+        # Set player and move choosing function
+        player = board.getTurn()
 
-    # Get all possible moves
-    moves = board.getMoves()
+        # Check if the board is at a terminal status (game over)
+        # Get the state
+        state = board.getTerminalGameState()
+        # If game over
+        if state != None:
+            return state
 
-    # Get move values for every possible move
-    moveValues = []
-    for moveXY in moves:
-        # Create a new board and make that move in it
-        nb = board.clone()
-        nb.move(moveXY, nb.getTurn())
+        # Get all possible moves
+        moves = board.getMoves()
 
-        # Do statistical prints
-        if DO_STATUS_PRINTS:
-            if stat_cycles % 100 == 0:
-                print(".", end="")
+        # Get move values for every possible move
+        moveValues = []
+        for moveXY in moves:
+            # Create a new board and make that move in it
+            nb = board.clone()
+            nb.move(moveXY, nb.getTurn())
 
-        # If the depth isn't at 0:
-        #   Run this function again on the new board with +1 depth
-        if depth != 0:
-            # Run minimax function
-            moveValues.append(getBoardValue(nb, depth=depth+1))
-        else: # We cannot go further because of depth limitations
-            # Get the state of the game
-            terminalGameState = board.getTerminalGameState()
-            if terminalGameState != None:
-                moreValues.append(terminalGameState)
-            else:
-                # Do predictive algorithm (none)
-                moveValues.append(predictBoardValue(nb))
-    
-    return assignTotalValue(moveValues, player)
+            # Do statistical prints
+            if DO_STATUS_PRINTS:
+                if stat_cycles % 100 == 0:
+                    print(".", end="")
+
+            # If the depth isn't at 0:
+            #   Run this function again on the new board with +1 depth
+            if depth != 0:
+                # Run minimax function
+                moveValues.append(self.getBoardValue(nb, depth=depth-1))
+            else: # We cannot go further because of depth limitations
+                # Get the state of the game
+                terminalGameState = board.getTerminalGameState()
+                if terminalGameState != None:
+                    moreValues.append(terminalGameState)
+                else:
+                    # Do predictive algorithm (none)
+                    moveValues.append(self.predictBoardValue(nb))
+        
+        return assignTotalValue(moveValues, player)
 

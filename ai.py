@@ -1,11 +1,19 @@
 from constants import *
 
+# Main Algorithm
+from algorithms.minimax import minimax
+# Prediction function
+from algorithms.predictive.none import predictBoardValue
+# Move selection
+from algorithms.move_selection.random import selectMove
+# Value Assignment
+from algorithms.value_assignment.default import assignTotalValue
+
 class AI:
-    def __init__(self, interface, mainAlgorithm, moveSelectionFunction, positiveSeachDepth=4):
-        self.main = mainAlgorithm
-        self.selectMove = moveSelectionFunction
-        # It's weird, but minimax will add to the running depth until it reaches 0, so thats why negative
-        self.searchDepth = positiveSeachDepth*-1
+    def __init__(self, interface, mainAlgorithm=minimax, predictive=predictBoardValue, moveSelection=selectMove, valueAssignment=assignTotalValue, searchDepth=4):
+        self.main = mainAlgorithm(predictive, valueAssignment, searchDepth)
+        self.selectMove = moveSelection
+        self.searchDepth = searchDepth
         self.interface = interface
 
     
@@ -26,7 +34,7 @@ class AI:
             nb = board.clone()
             nb.move(moveXY, nb.getTurn())
             # Get the value of that board
-            moveValues.append(self.main(nb, depth=self.searchDepth+1))
+            moveValues.append(self.main.getBoardValue(nb, depth=self.searchDepth-1))
             if DO_STATUS_PRINTS:
                 print("Move Choice:", moveValues[-1])
 

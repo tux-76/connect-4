@@ -7,11 +7,12 @@ BOARD_ROWS = 6
 WIN_CONNECT_NUM = 4
 
 # Do status prints?
-DO_STATUS_PRINTS = True
+DO_STATUS_PRINTS = False
 
 
 # PLACEHOLDERS
 # # # # # # # # # # # # # 
+# Note: It is crucial that player1's value stays tied to yellow and vice-versa
 # PLAYERS
 PLAYER_MAX = 1
 PLAYER_MIN = -1

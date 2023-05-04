@@ -7,13 +7,14 @@
 # - RED refers to PLAYER_MIN's spaces (placeholders for: -1)
 # - The x value (m[x]) in board.matrix is the column
 
-# IMPORTS
+# CUSTOMIZABLE FUNCTION IMPORTS
+#   Note: These are not all the functions, there is a default selection in ai.py
 # Interpreter
 from interface.terminal import Interface
-# Main Algorithm
-from algorithms.minimax import getBoardValue
+# Prediction function
+from algorithms.predictive.none import predictBoardValue
 # Move selection
-from algorithms.move_selection.self_sabotage import selectMove
+from algorithms.move_selection.random import selectMove
 
 # Necessary imports
 from constants import *
@@ -33,24 +34,19 @@ MAX_SEARCH_DEPTH = 4
 # INIT
 interface = Interface()
 board = Board(interface.getBoard())
-ai = AI(interface, getBoardValue, selectMove, positiveSeachDepth=MAX_SEARCH_DEPTH)
-
-
-# TRAP PRESET (yellow play 2)
-# board.matrix=[
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 1],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, -1],
-#     [0, 0, 0, 0, 0, 0],
-# ]
+ai = AI(interface=interface, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=4)
+# ai2 = AI(interface=interface, mainAlgorithm=minimax, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=4)
 
 while not board.isTerminal():
-    # Player
     print()
+
+    # Player
     interface.makeMove(board)
+    # ai2.makeMove(board)
+    # interface.displayBoard(board)
+
+
+    # Check
     if board.isTerminal():
         break
 
