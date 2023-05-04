@@ -19,21 +19,19 @@ class Interface():
         return matrix
     
     # Gets the move from the user
-    def makeMove(self, board):
-        # Show the board to the player
-        self.displayBoard(board)
-
+    def getMove(self, board):
+        userMove = None
         success = False
         while not success:
             # Get valid input
             validInput = False
             while not validInput:
                 # Get user move
-                move = input("Make move by column number:")
-                if move.isnumeric():
-                    move = int(move) - 1
+                userMoveX = input("Make move by column number:")
+                if userMoveX.isnumeric():
+                    userMoveX = int(userMoveX) - 1
                     validInput = True
-                elif move == "":
+                elif userMoveX == "":
                     print("! No user input given !")
                     return 0
                 else:
@@ -44,12 +42,15 @@ class Interface():
             for validMoveXY in validMoves:
                 x, y = validMoveXY
                 # If the x of this move fits our inputted column
-                if x == move:
-                    board.move(validMoveXY, board.getTurn())
+                if x == userMoveX:
+                    userMove = validMoveXY
                     success = True
                     break
             if success == False:
                 print("That move can not be played...")
+        
+        return userMove
+
 
     def updateAIMove(self, aiMove):
         print("AI Selected:", aiMove[0]+1)
@@ -57,6 +58,7 @@ class Interface():
     # Display the board
     def displayBoard(self, board, lineStart="", end="\n"):
         m = board.matrix
+        print()
         # Header
         for colInd in range(len(m)):
             print(str(colInd+1)+" ", end="")

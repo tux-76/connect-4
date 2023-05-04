@@ -20,6 +20,7 @@ from algorithms.move_selection.random import selectMove
 from constants import *
 from board import Board
 from ai import AI
+from user import User
 
 # CHANGEABLE VARIABLES
 #   Gamerule variables and others can be found in constants.py
@@ -34,14 +35,14 @@ MAX_SEARCH_DEPTH = 4
 # INIT
 interface = Interface()
 board = Board(interface.getBoard())
+user = User(interface)
 ai = AI(interface=interface, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=4)
 # ai2 = AI(interface=interface, mainAlgorithm=minimax, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=4)
 
 while not board.isTerminal():
-    print()
 
     # Player
-    interface.makeMove(board)
+    user.makeMove(board)
     # ai2.makeMove(board)
     # interface.displayBoard(board)
 

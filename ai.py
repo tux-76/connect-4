@@ -46,6 +46,7 @@ class AI:
     
     # Make move (get move but actually does the move)
     def makeMove(self, board):
+        self.interface.displayBoard(board)
         aiMove = self.getMove(board)
         board.move(aiMove, board.getTurn())
         self.interface.updateAIMove(aiMove)
