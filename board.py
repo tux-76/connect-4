@@ -5,6 +5,9 @@
 # Imports
 from constants import *
 from copy import deepcopy
+import time
+
+time_taken = 0
 
 # BOARD CLASS
 # Board structure [col][row] OR [x][y]
@@ -91,12 +94,16 @@ class Board:
     # - If an ending is not reached will return None
     # - If at an ending will return ending value
     def getGameState(self):
+        global time_taken
+        # Do time stats
+        time_start = time.time()
+
         # For every direction in directional data
         for dirMatrix in self.directional:
             # For every connection column
             for connectCol in dirMatrix:
-                # If the column has enough spaces to make a connect win
-                if len(connectCol) >= WIN_CONNECT_NUM:
+                # If the column has enough of one color to make a connect
+                if connectCol.count(SPACE_YELLOW) >= WIN_CONNECT_NUM or connectCol.count(SPACE_RED) >= WIN_CONNECT_NUM:
                     connectNum = 0
                     currentColor = None
                     for spaceXY in connectCol:
@@ -113,7 +120,8 @@ class Board:
                         # Check if the connectNumber is enough to win
                         if connectNum == WIN_CONNECT_NUM:
                             return space # Return the space that won
-    
+
+        time_taken = time_taken + time.time() - time_start
         return None
 
 
@@ -135,3 +143,6 @@ class Board:
     def move(self, xy, spaceType):
         x, y = xy
         self.matrix[x][y] = spaceType
+    
+    def printTime(self):
+        print("Time spent calculating state:", time_taken)

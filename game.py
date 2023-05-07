@@ -5,15 +5,6 @@ class Game():
 
         # Board
         self.board = BoardClass(self.interface.getBoard())
-        # self.board.matrix = [
-        #     [0, 0, 0, 0, 1, 1],
-        #     [0, 0, 0, 1,-1, 1],
-        #     [0, 0, 0, 0, 0,-1],
-        #     [0, 0, 0, 0,-1, 1],
-        #     [0, 0, 0, 0, 0,-1],
-        #     [0, 0, 0, 0,-1, 1],
-        #     [0, 0, 0, 0, 0, 0],
-        # ]
 
         self.players = players
         self.history = []
@@ -37,6 +28,6 @@ class Game():
         return gameState == None
 
     def end(self):
-        self.interface.endGame(board, board.getGameState())
+        self.interface.endGame(self.board, self.board.getGameState())
         
 

@@ -7,6 +7,9 @@ from .value_assignment.default import assignTotalValue
 from constants import *
 from board import Board
 
+# DEBUG
+from interface.terminal import Interface
+
 # Statistics
 stat_cycles = 0
 
@@ -19,14 +22,13 @@ stat_cycles = 0
 # - depth: if is a natural number, simply keeps track of the current depth
 #     - MAX DEPTH: to set max depth, set depth to the negative of the max depth,
 #         once max depth is reached will call prediction function
-class minimax():
-    def __init__(self, predictiveFunction, valueAssignmentFunction, depth):
+class Minimax():
+    def __init__(self, predictiveFunction, valueAssignmentFunction):
         self.predictBoardValue = predictiveFunction
         self.assignTotalValue = valueAssignmentFunction
-        self.depth = depth
 
     # MAIN FUNCTION
-    def getBoardValue(self, board, depth=4):
+    def getBoardValue(self, board, depth=5):
         # Update statistics
         global stat_cycles
         stat_cycles = stat_cycles + 1
@@ -62,9 +64,13 @@ class minimax():
                 if stat_cycles % 100 == 0:
                     print(".", end="")
 
-            # If the depth isn't at 0:
             #   Run this function again on the new board with +1 depth
-            moveValues.append(self.getBoardValue(nb, depth=depth-1))
+            nbValue = self.getBoardValue(nb, depth=depth-1)
+            moveValues.append(nbValue)
+            
+            # Check if the nbValue is already the best move for player
+            if nbValue == player:
+                break
         
         return assignTotalValue(moveValues, player)
 

@@ -35,7 +35,7 @@ MAX_SEARCH_DEPTH = 4
 
 # INIT
 user = User()
-ai = AI(predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5)
+ai = AI(predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5, doShortcuts=False)
 
 # Main
 game = Game(Interface, Board, (user, ai))
