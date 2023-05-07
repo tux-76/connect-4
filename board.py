@@ -111,7 +111,7 @@ class Board:
                         # BLANK: reset connect #, OCCUPIED: add to it
                         if space == SPACE_BLANK:
                             connectNum = 0
-                        elif space == SPACE_YELLOW or space == SPACE_RED:
+                        else:
                             # If different color: reset
                             if space != currentColor:
                                 currentColor = space

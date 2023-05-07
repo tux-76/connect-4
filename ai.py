@@ -44,13 +44,13 @@ class AI:
             nbValue = self.main.getBoardValue(nb, depth=self.searchDepth-1)
             moveValues.append(nbValue)
             if DO_DEBUG:
-                print("Move Choice:", moveValues[-1])
+                print(".Move Choice:", moveValues[-1])
             # Check if the nbValue is already the best move for player
             if nbValue == player and self.doShortcuts:
                 break
 
         time_elapsed = time.time() - time_start
-        print("Approx. time ellapsed:", time_elapsed)
+        print("Time ellapsed:", time_elapsed)
         board.printTime()
         return self.selectMove(moves, moveValues, player)
     

@@ -2,13 +2,10 @@
 # MINIMAX algorithm
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Value Selection function
-from algorithms.value_assignment.default import assignTotalValue
+from algorithms.value_assignment.decay import assignTotalValue
 
 from constants import *
 from board import Board
-
-# DEBUG
-from interface.terminal import Interface
 
 # Statistics
 stat_cycles = 0
