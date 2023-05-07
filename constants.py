@@ -7,7 +7,7 @@ BOARD_ROWS = 6
 WIN_CONNECT_NUM = 4
 
 # Do status prints?
-DO_STATUS_PRINTS = False
+DO_STATUS_PRINTS = True
 
 
 # PLACEHOLDERS
@@ -27,9 +27,12 @@ SPACE_LIST = [SPACE_BLANK, SPACE_YELLOW, SPACE_RED]
 STATE_WIN1 = 1
 STATE_WIN2 = -1
 STATE_DRAW = 0
-STATE_LIST = [STATE_DRAW, STATE_WIN1, STATE_WIN2]
 
 # DIRECTIONS FOR SEARCHING
+DIR_UP_DIAGONAL = 0
+DIR_HORIZONTAL = 1
+DIR_DOWN_DIAGONAL = 2
+DIR_VERTICAL = 3
 # Translation: for the DIR indexes, these show the x and y values that are moved in that
 #   direction
 DIR_TRANS_X = (1,  1, 1, 0)

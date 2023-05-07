@@ -5,7 +5,10 @@ from termcolor import colored
 # CHAR_SPACE_LIST = ['-', 'Y', 'R']
 CHAR_SPACE_LIST = ['-', colored("o", "yellow"), colored("o", "red")]
 
-TITLE_GAME_OVER_LIST = ["Game Draw", colored("YELLOW", "yellow")+" WIN", colored("RED", "red")+" WIN"]
+# lol ok this is stupid but 1 is yellow and -1 (negative indexing) is red so it works :))
+PLAYER_TITLE_LIST = [0, colored("YELLOW", "yellow"), colored("RED", "red")]
+TITLE_GAME_OVER_LIST = ["Game Draw", PLAYER_TITLE_LIST[1]+" WIN", PLAYER_TITLE_LIST[-1]+" WIN"]
+
 
 # Display Board
 class Interface():
@@ -32,8 +35,7 @@ class Interface():
                     userMoveX = int(userMoveX) - 1
                     validInput = True
                 elif userMoveX == "":
-                    print("! No user input given !")
-                    return 0
+                    return None
                 else:
                     print("Please try again...")
             # Get valid moves
@@ -56,7 +58,7 @@ class Interface():
         print("AI Selected:", aiMove[0]+1)
     
     # Display the board
-    def displayBoard(self, board, lineStart="", end="\n"):
+    def displayBoard(self, board, showNextMove=True, lineStart="", end="\n"):
         m = board.matrix
         print()
         # Header
@@ -70,11 +72,13 @@ class Interface():
             for x in range(len(m)):
                 print(CHAR_SPACE_LIST[SPACE_LIST.index( m[x][y] )], end=" ")
             print()
+        if showNextMove:
+            print("NEXT MOVE:", PLAYER_TITLE_LIST[board.getTurn()])
         print(end, end="")
     
     # Print end game things
     def endGame(self, board, gameState):
         print()
-        self.displayBoard(board)
+        self.displayBoard(board, showNextMove=False)
         print("GAME OVER")
         print(TITLE_GAME_OVER_LIST[gameState])

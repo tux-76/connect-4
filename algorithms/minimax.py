@@ -37,11 +37,16 @@ class minimax():
 
         # Check if the board is at a terminal status (game over)
         # Get the state
-        state = board.getTerminalGameState()
+        state = board.getGameState()
         # If game over
         if state != None:
             return state
-
+        
+        # Check if the 
+        if depth == 0:
+            return self.predictBoardValue(board)
+            
+        # BEGIN CRAWLING
         # Get all possible moves
         moves = board.getMoves()
 
@@ -59,17 +64,7 @@ class minimax():
 
             # If the depth isn't at 0:
             #   Run this function again on the new board with +1 depth
-            if depth != 0:
-                # Run minimax function
-                moveValues.append(self.getBoardValue(nb, depth=depth-1))
-            else: # We cannot go further because of depth limitations
-                # Get the state of the game
-                terminalGameState = board.getTerminalGameState()
-                if terminalGameState != None:
-                    moreValues.append(terminalGameState)
-                else:
-                    # Do predictive algorithm (none)
-                    moveValues.append(self.predictBoardValue(nb))
+            moveValues.append(self.getBoardValue(nb, depth=depth-1))
         
         return assignTotalValue(moveValues, player)
 

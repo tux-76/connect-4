@@ -1,4 +1,7 @@
+import time
+
 from constants import *
+
 
 # Main Algorithm
 from algorithms.minimax import minimax
@@ -21,6 +24,9 @@ class AI:
     #   returns the coordinates of the best one
     # ===============================================================================
     def getMove(self, board):
+        # Do time stats
+        time_start = time.time()
+
         # Get the players turn
         player = board.getTurn()
 
@@ -38,10 +44,8 @@ class AI:
             if DO_STATUS_PRINTS:
                 print("Move Choice:", moveValues[-1])
 
-        # if player == PLAYER_MAX:
-        #     return moves[moveValues.index(max(moveValues))]
-        # elif player == PLAYER_MIN:
-        #     return moves[moveValues.index(min(moveValues))]
+        time_elapsed = time.time() - time_start
+        print("Approx. time ellapsed:", time_elapsed)
         return self.selectMove(moves, moveValues, player)
     
     # Make move (get move but actually does the move)

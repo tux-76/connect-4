@@ -35,24 +35,33 @@ MAX_SEARCH_DEPTH = 4
 # INIT
 interface = Interface()
 board = Board(interface.getBoard())
+# board.matrix = [
+#     [0, 0, 1, 1, 1, 1],
+#     [0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0],
+# ]
+# print(board.getGameState())
 user = User(interface)
-ai = AI(interface=interface, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=4)
-# ai2 = AI(interface=interface, mainAlgorithm=minimax, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=4)
+ai = AI(interface=interface, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5)
+ai2 = AI(interface=interface, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5)
 
-while not board.isTerminal():
-
+while board.getGameState() == None:
     # Player
-    user.makeMove(board)
+    ai.makeMove(board)
     # ai2.makeMove(board)
     # interface.displayBoard(board)
 
 
     # Check
-    if board.isTerminal():
+    if board.getGameState() != None:
         break
 
     # AI
-    ai.makeMove(board)
+    user.makeMove(board)
     
 
-interface.endGame(board, board.getTerminalGameState())
+interface.endGame(board, board.getGameState())

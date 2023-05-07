@@ -9,9 +9,52 @@ from copy import deepcopy
 # BOARD CLASS
 # Board structure [col][row] OR [x][y]
 class Board:
+    # ===================================
+    # -----------------------INITIALIZER
+    # ===================================
     def __init__ (self, boardMatrix):
+        # Set board matrix
         self.matrix = boardMatrix
+        self.cols = len(self.matrix)
+        self.rows = len(self.matrix[0])
 
+        # SET UP DIRECTIONAL CONNECTION MATRICES
+        # ===========================================
+        #   (UP_DIAG, HORIZONTAL, DOWN_DIAG, VERTICAL)
+        m = self.matrix
+        self.directional = ([], [], [], [])
+        dr = self.directional
+
+        # ADD COLUMNS
+        # Vertical: Add same amount as matrix columns
+        for i in range(self.cols):
+            dr[DIR_VERTICAL].append([])
+        # Horizontal: Add same amount as matrix rows
+        for i in range(self.rows):
+            dr[DIR_HORIZONTAL].append([])
+        # Diagonals: Add amount -> matrix rows + columns - 1
+        for i in range(self.cols+self.rows-1):
+            dr[DIR_UP_DIAGONAL].append([])
+            dr[DIR_DOWN_DIAGONAL].append([])
+        
+        # FILL DIRECTIONAL RELATIONS
+        # Loop through indexes of all elements in matrix
+        for x in range(self.cols):
+            for y in range(self.rows):
+                # Add to Verticle
+                dr[DIR_VERTICAL][x].append((x, y))
+                # Add to Horizontal
+                dr[DIR_HORIZONTAL][y].append((x, y))
+                # Add to Down Diagonal
+                dr[DIR_DOWN_DIAGONAL][x+y].append((x, y))
+                # Add to Up Diagonal
+                dr[DIR_UP_DIAGONAL][x-y+self.rows-1].append((x, y))
+
+
+        
+    # ====================================================
+    # -------------------------------------------METHODS
+    # ====================================================
     # Clone => new Board: Clones the current board
     def clone(self):
         return Board(deepcopy(self.matrix))
@@ -19,6 +62,12 @@ class Board:
     # On Board => Bool: determines whether a point is on the board or not
     def onBoard(self, x, y):
         return (x < BOARD_COLUMNS and x >= 0) and (y < BOARD_ROWS and y >= 0)
+
+    def getSpace(self, x, y):
+        if self.onBoard(x, y):
+            return self.matrix[x][y]
+        else:
+            return None
 
 
     # Count Spaces => Int: Counts the number of spaces that are that type in the board
@@ -38,55 +87,36 @@ class Board:
         else:
             return PLAYER_MAX
 
-    # Find Connect => (tuple) or -1: Checks for a connect4, 
-    # - if found will return the coordinates (x, y)
-    # - if not found will return -1
-    def findConnect(self, spaceType):
-        m = self.matrix
-        # hasConnect: follows the given space to see if any connect4s are attached
-        def hasConnect(x, y):
-            # for every direction
-            for direc in range(len(DIR_TRANS_X)):
-                connectNum = 0
-                cx, cy = x, y # cursor variables
-                # while the cursor is on the sqaure type
-                while m[cx][cy] == spaceType:
-                    connectNum = connectNum + 1
-                    if connectNum >= WIN_CONNECT_NUM:
-                        return True
-                    
-                    cx = cx + DIR_TRANS_X[direc]
-                    cy = cy + DIR_TRANS_Y[direc]
-                    if not self.onBoard(cx, cy):
-                        break
-
-            # if this point is reached without returning anything, return false
-            return False
-
-        # START        
-        # loop through the matrix (all the way down then right
-        for x in range(len(m)):
-            for y in range(len(m[0])):
-                # if the type is right
-                if (m[x][y] == spaceType):
-                    if hasConnect(x, y):
-                        return (x, y)
-        return -1
-
-
-    # Is Terminal => Bool: Determines wether the game is over
-    def isTerminal(self):
-        return (self.findConnect(SPACE_YELLOW) != -1 or self.findConnect(SPACE_RED) != -1) or self.countSpaces(SPACE_BLANK) == 0
+    # GET GAME STATE: Gets the game state
+    # - If an ending is not reached will return None
+    # - If at an ending will return ending value
+    def getGameState(self):
+        # For every direction in directional data
+        for dirMatrix in self.directional:
+            # For every connection column
+            for connectCol in dirMatrix:
+                # If the column has enough spaces to make a connect win
+                if len(connectCol) >= WIN_CONNECT_NUM:
+                    connectNum = 0
+                    currentColor = None
+                    for spaceXY in connectCol:
+                        space = self.matrix[spaceXY[0]][spaceXY[1]]
+                        # BLANK: reset connect #, OCCUPIED: add to it
+                        if space == SPACE_BLANK:
+                            connectNum = 0
+                        elif space == SPACE_YELLOW or space == SPACE_RED:
+                            # If different color: reset
+                            if space != currentColor:
+                                currentColor = space
+                                connectNum = 0
+                            connectNum = connectNum + 1
+                        # Check if the connectNumber is enough to win
+                        if connectNum == WIN_CONNECT_NUM:
+                            return space # Return the space that won
     
-    def getTerminalGameState(self):
-        if self.findConnect(SPACE_YELLOW) != -1:
-            return STATE_WIN1
-        elif self.findConnect(SPACE_RED) != -1:
-            return STATE_WIN2
-        elif self.countSpaces(SPACE_BLANK) == 0:
-            return STATE_DRAW
-        else:
-            return None
+        return None
+
+
 
     # Get Moves => Array > (x, y): Gets the possible a player can make
     def getMoves(self):
