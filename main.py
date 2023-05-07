@@ -12,7 +12,7 @@
 # Interpreter
 from interface.terminal import Interface
 # Prediction function
-from algorithms.predictive.open_connect_lengths import predictBoardValue
+from algorithms.predictive.openConnectLengths import predictBoardValue
 # Move selection
 from algorithms.move_selection.default import selectMove
 
