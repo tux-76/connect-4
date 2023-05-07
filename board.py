@@ -101,12 +101,12 @@ class Board:
         # For every direction in directional data
         for dirMatrix in self.directional:
             # For every connection column
-            for connectCol in dirMatrix:
+            for connectColXYs in dirMatrix:
                 # If the column has enough of one color to make a connect
-                if connectCol.count(SPACE_YELLOW) >= WIN_CONNECT_NUM or connectCol.count(SPACE_RED) >= WIN_CONNECT_NUM:
+                if len(connectColXYs) >= WIN_CONNECT_NUM:
                     connectNum = 0
                     currentColor = None
-                    for spaceXY in connectCol:
+                    for spaceXY in connectColXYs:
                         space = self.matrix[spaceXY[0]][spaceXY[1]]
                         # BLANK: reset connect #, OCCUPIED: add to it
                         if space == SPACE_BLANK:
@@ -145,4 +145,6 @@ class Board:
         self.matrix[x][y] = spaceType
     
     def printTime(self):
+        global time_taken
         print("Time spent calculating state:", time_taken)
+        time_taken = 0

@@ -2,7 +2,7 @@
 # MINIMAX algorithm
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Value Selection function
-from .value_assignment.default import assignTotalValue
+from algorithms.value_assignment.default import assignTotalValue
 
 from constants import *
 from board import Board

@@ -4,11 +4,11 @@ from constants import *
 
 
 # Main Algorithm
-from algorithms.minimax import Minimax
+from algorithms.main.minimax import Minimax
 # Prediction function
 from algorithms.predictive.none import predictBoardValue
 # Move selection
-from algorithms.move_selection.random import selectMove
+from algorithms.move_selection.default import selectMove
 # Value Assignment
 from algorithms.value_assignment.default import assignTotalValue
 

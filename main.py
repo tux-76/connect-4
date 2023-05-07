@@ -14,7 +14,7 @@ from interface.terminal import Interface
 # Prediction function
 from algorithms.predictive.none import predictBoardValue
 # Move selection
-from algorithms.move_selection.random import selectMove
+from algorithms.move_selection.default import selectMove
 
 # Necessary imports
 from constants import *
@@ -23,19 +23,12 @@ from ai import AI
 from user import User
 from game import Game
 
-# CHANGEABLE VARIABLES
-#   Gamerule variables and others can be found in constants.py
-# Seach Depth: The maximum depth to search, will use predictive functions after that
-#   (set to negative one for infinite)
-MAX_SEARCH_DEPTH = 4
-
-
 
     
 
 # INIT
 user = User()
-ai = AI(predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5, doShortcuts=False)
+ai = AI(predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5, doShortcuts=True)
 
 # Main
 game = Game(Interface, Board, (user, ai))
