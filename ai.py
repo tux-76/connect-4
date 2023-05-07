@@ -13,7 +13,7 @@ from algorithms.move_selection.random import selectMove
 from algorithms.value_assignment.default import assignTotalValue
 
 class AI:
-    def __init__(self, interface, mainAlgorithm=minimax, predictive=predictBoardValue, moveSelection=selectMove, valueAssignment=assignTotalValue, searchDepth=4):
+    def __init__(self, interface=None, mainAlgorithm=minimax, predictive=predictBoardValue, moveSelection=selectMove, valueAssignment=assignTotalValue, searchDepth=4):
         self.main = mainAlgorithm(predictive, valueAssignment, searchDepth)
         self.selectMove = moveSelection
         self.searchDepth = searchDepth
@@ -41,7 +41,7 @@ class AI:
             nb.move(moveXY, nb.getTurn())
             # Get the value of that board
             moveValues.append(self.main.getBoardValue(nb, depth=self.searchDepth-1))
-            if DO_STATUS_PRINTS:
+            if DO_DEBUG:
                 print("Move Choice:", moveValues[-1])
 
         time_elapsed = time.time() - time_start
@@ -54,3 +54,4 @@ class AI:
         aiMove = self.getMove(board)
         board.move(aiMove, board.getTurn())
         self.interface.updateAIMove(aiMove)
+        return aiMove

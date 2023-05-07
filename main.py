@@ -21,6 +21,7 @@ from constants import *
 from board import Board
 from ai import AI
 from user import User
+from game import Game
 
 # CHANGEABLE VARIABLES
 #   Gamerule variables and others can be found in constants.py
@@ -33,35 +34,13 @@ MAX_SEARCH_DEPTH = 4
     
 
 # INIT
-interface = Interface()
-board = Board(interface.getBoard())
-# board.matrix = [
-#     [0, 0, 1, 1, 1, 1],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0],
-# ]
-# print(board.getGameState())
-user = User(interface)
-ai = AI(interface=interface, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5)
-ai2 = AI(interface=interface, predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5)
+user = User()
+ai = AI(predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5)
 
-while board.getGameState() == None:
-    # Player
-    ai.makeMove(board)
-    # ai2.makeMove(board)
-    # interface.displayBoard(board)
+# Main
+game = Game(Interface, Board, (user, ai))
 
+while game.loop():
+    pass
 
-    # Check
-    if board.getGameState() != None:
-        break
-
-    # AI
-    user.makeMove(board)
-    
-
-interface.endGame(board, board.getGameState())
+game.end()

@@ -1,7 +1,7 @@
 # A class for obtaining input from a source other than internal AI
 
 class User:
-    def __init__(self, interface, allowSkip=True):
+    def __init__(self, interface=None, allowSkip=True):
         self.interface = interface
         self.allowSkip = allowSkip
 
@@ -9,6 +9,7 @@ class User:
         # Show the board to the player
         self.interface.displayBoard(board)
         success = False
+        move = None
         while not success:
             move = self.interface.getMove(board)
             if not (move == None and self.allowSkip):
@@ -17,3 +18,4 @@ class User:
             else:
                 print("! Skipping user input !")
                 success = True
+        return move

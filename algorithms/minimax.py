@@ -2,7 +2,7 @@
 # MINIMAX algorithm
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Value Selection function
-from .value_assignment.decay import assignTotalValue
+from .value_assignment.default import assignTotalValue
 
 from constants import *
 from board import Board
@@ -58,7 +58,7 @@ class minimax():
             nb.move(moveXY, nb.getTurn())
 
             # Do statistical prints
-            if DO_STATUS_PRINTS:
+            if DO_DEBUG:
                 if stat_cycles % 100 == 0:
                     print(".", end="")
 

@@ -7,7 +7,7 @@ BOARD_ROWS = 6
 WIN_CONNECT_NUM = 4
 
 # Do status prints?
-DO_STATUS_PRINTS = True
+DO_DEBUG = True
 
 
 # PLACEHOLDERS
