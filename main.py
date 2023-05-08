@@ -33,7 +33,7 @@ ai = AI(predictive=predictByConnect, searchDepth=5, doShortcuts=True)
 ai2 = AI(predictive=noPredict, searchDepth=5, doShortcuts=True)
 
 # Main
-game = Game(Interface, Board, (ai2, ai))
+game = Game(Interface, Board, (user, ai))
 
 while game.loop():
     pass
