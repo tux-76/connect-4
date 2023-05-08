@@ -12,7 +12,8 @@
 # Interpreter
 from interface.terminal import Interface
 # Prediction function
-from algorithms.predictive.openConnectLengths import predictBoardValue
+from algorithms.predictive.openConnectLengths import predictBoardValue as predictByConnect
+from algorithms.predictive.none import predictBoardValue as noPredict
 # Move selection
 from algorithms.move_selection.default import selectMove
 
@@ -28,8 +29,8 @@ from game import Game
 
 # INIT
 user = User()
-ai = AI(predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5, doShortcuts=True)
-ai2 = AI(predictive=predictBoardValue, moveSelection=selectMove, searchDepth=5, doShortcuts=True)
+ai = AI(predictive=predictByConnect, searchDepth=5, doShortcuts=True)
+ai2 = AI(predictive=noPredict, searchDepth=5, doShortcuts=True)
 
 # Main
 game = Game(Interface, Board, (ai2, ai))

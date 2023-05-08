@@ -1,8 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # MINIMAX algorithm
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Value Selection function
-from algorithms.value_assignment.decay import assignTotalValue
 
 from constants import *
 from board import Board
@@ -69,5 +67,5 @@ class Minimax():
             if nbValue == player:
                 break
         
-        return assignTotalValue(moveValues, player)
+        return self.assignTotalValue(moveValues, player)
 
