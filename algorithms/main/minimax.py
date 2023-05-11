@@ -13,10 +13,6 @@ stat_cycles = 0
 # MINIMAX CLASS (recursive)
 # DESCRIPTION: Gets the gamestate of the board inputted
 # GAMESTATE: A number from -1 to 1 representing the outcome of the board if both players play optimaly
-# SPECIAL ARGS:
-# - depth: if is a natural number, simply keeps track of the current depth
-#     - MAX DEPTH: to set max depth, set depth to the negative of the max depth,
-#         once max depth is reached will call prediction function
 class Minimax():
     def __init__(self, predictiveFunction, valueAssignmentFunction):
         self.predictBoardValue = predictiveFunction
